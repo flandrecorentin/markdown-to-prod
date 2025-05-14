@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MarkdownViewerComponent } from './markdown-viewer/markdown-viewer.component';
 import { MarkdownListComponent } from './markdown-list/markdown-list.component';
+import { DefaultNotFoundComponent } from './default/default-not-found/default-not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MarkdownViewerComponent,
-    MarkdownListComponent
+    MarkdownListComponent,
+    DefaultNotFoundComponent
   ],
   imports: [
     BrowserModule,

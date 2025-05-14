@@ -12,8 +12,10 @@ export class MarkdownListComponent implements OnInit {
   constructor(private markdownService: MarkdownService) { }
 
   ngOnInit(): void {
-    this.markdownService.getMarkdownFiles().then(
-      files => this.markdownFiles = files
+    //
+    this.markdownService.getContent().then(
+
+      //files => this.markdownFiles = files
     );
   }
 }

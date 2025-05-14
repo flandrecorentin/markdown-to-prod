@@ -2,10 +2,14 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MarkdownViewerComponent } from './markdown-viewer/markdown-viewer.component';
 import { MarkdownListComponent } from './markdown-list/markdown-list.component';
+import {DefaultNotFoundComponent} from "./default/default-not-found/default-not-found.component";
 
 const routes: Routes = [
-  { path: 'markdown/:markdownFile', component: MarkdownViewerComponent },
-  { path: '', component: MarkdownListComponent }
+  { path: 'md', component: MarkdownViewerComponent, children: [
+    { path: '**', component: MarkdownViewerComponent}
+  ]},
+  { path: '', component: MarkdownListComponent },
+  { path: '**', component: DefaultNotFoundComponent }
 ];
 
 @NgModule({

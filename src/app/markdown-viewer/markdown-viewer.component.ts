@@ -9,6 +9,7 @@ import { MarkdownService } from '../markdown.service';
 })
 export class MarkdownViewerComponent implements OnInit {
   markdownContent: string = '';
+  markdownPath: string = '';
   error: boolean = false;
 
   constructor(
@@ -17,11 +18,17 @@ export class MarkdownViewerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      const markdownFile = params.get('markdownFile');
-      if (markdownFile) {
-        const githubUrl = `https://raw.githubusercontent.com/test/${markdownFile}.md`;
-        this.markdownService.getMarkdownContent(githubUrl).then(
+    console.log(this.route.outlet)
+    console.log(this.route.queryParamMap)
+    // console.log(this.route.paramMap.subscribe(paramMap => {console.log(paramMap)}))
+    this.route.paramMap.subscribe(urlSegments => {
+      console.log("MarkdownViewerComponent")
+      const markdownFile = urlSegments.get('path') + '.md'; // TODO : Try with .MD .Md .mD
+      console.log("urlSegments: " + urlSegments)
+      // this.markdownPath = urlSegments.slice(1).map(segment => segment.path).join('/');
+      if (this.markdownPath) {
+        console.log(this.markdownPath)
+        this.markdownService.getMarkdown(this.markdownPath).then(
           content => this.markdownContent = content
         ).catch(() => this.error = true);
       }
