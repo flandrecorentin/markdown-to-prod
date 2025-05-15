@@ -20,6 +20,6 @@ import { DefaultNotFoundComponent } from './default/default-not-found/default-no
     HttpClientModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

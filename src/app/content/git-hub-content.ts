@@ -35,3 +35,9 @@ export function parse(data : any): GitHubContent {
     }
   };
 }
+
+export function getDownloadUrl(data : GitHubContent | GitHubContents) {
+  if (Array.isArray(data))
+    return data[0].download_url
+  return data.download_url
+}

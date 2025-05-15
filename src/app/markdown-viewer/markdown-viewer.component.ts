@@ -1,37 +1,60 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {ActivatedRoute, UrlSegment} from '@angular/router';
 import { MarkdownService } from '../markdown.service';
+import {DefaultFolderPath, FolderPath, toStringFolderPath} from "../content/folder-path";
+import {getDownloadUrl} from "../content/git-hub-content";
 
 @Component({
   selector: 'app-markdown-viewer',
   templateUrl: './markdown-viewer.component.html',
-  styleUrls: ['./markdown-viewer.component.css']
+  styleUrls: ['./markdown-viewer.component.css', '../default/simple-css.min.css'],
+  encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class MarkdownViewerComponent implements OnInit {
   markdownContent: string = '';
-  markdownPath: string = '';
+  folderPath: FolderPath = DefaultFolderPath;
   error: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
-    private markdownService: MarkdownService
+    private markdownService: MarkdownService,
   ) { }
 
   ngOnInit(): void {
-    console.log(this.route.outlet)
-    console.log(this.route.queryParamMap)
-    // console.log(this.route.paramMap.subscribe(paramMap => {console.log(paramMap)}))
-    this.route.paramMap.subscribe(urlSegments => {
-      console.log("MarkdownViewerComponent")
-      const markdownFile = urlSegments.get('path') + '.md'; // TODO : Try with .MD .Md .mD
-      console.log("urlSegments: " + urlSegments)
-      // this.markdownPath = urlSegments.slice(1).map(segment => segment.path).join('/');
-      if (this.markdownPath) {
-        console.log(this.markdownPath)
-        this.markdownService.getMarkdown(this.markdownPath).then(
-          content => this.markdownContent = content
-        ).catch(() => this.error = true);
-      }
+    this.route.paramMap.subscribe(params => {
+      this.folderPath = this.markdownService.decodePath(decodeURIComponent(params.get('markdown') || ''));
     });
+
+    this.markdownService.getMarkdown(toStringFolderPath(this.folderPath)).then(
+      async content => this.markdownContent = await this.processImageSrc(content)
+    ).catch((error : Error) => {
+      console.error(error.message)
+      this.error = true
+    });
+
+  }
+
+  async processImageSrc(div: string): Promise<string> {
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = div;
+
+    const imgElements = tempDiv.querySelectorAll('img');
+
+    // @ts-ignore
+    for (const img of imgElements) {
+      const currentSrc = img.getAttribute('src');
+      if (currentSrc) {
+        const newSrc = await this.modifyImageSource(currentSrc);
+        img.setAttribute('src', newSrc);
+      }
+    }
+
+    return tempDiv.innerHTML
+  }
+
+  private async modifyImageSource(originalSrc: string): Promise<string> {
+    const url = this.folderPath.path + '/' + originalSrc
+    const gitHubContent = await this.markdownService.getContent(url)
+    return getDownloadUrl(await gitHubContent)
   }
 }
