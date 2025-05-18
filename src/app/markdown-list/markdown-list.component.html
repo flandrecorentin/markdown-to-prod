@@ -4,7 +4,7 @@
     <li *ngFor="let entryMarkdownFiles of markdownFilesMapped | keyvalue">
       <h2>{{getynonymOrDefault(entryMarkdownFiles.key)}}</h2>
       <div *ngFor="let markdowFile of entryMarkdownFiles.value">
-        <a [routerLink]="['/markdown', markdownService.encodePath(markdowFile.path)]">{{ markdowFile.name }}</a>
+        <a [routerLink]="['/md', markdownService.encodePath(markdowFile.path)]">{{ markdowFile.name }}</a>
       </div>
     </li>
   </ul>
