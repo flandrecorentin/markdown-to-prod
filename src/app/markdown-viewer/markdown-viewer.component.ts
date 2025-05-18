@@ -7,7 +7,7 @@ import {getDownloadUrl} from "../content/git-hub-content";
 @Component({
   selector: 'app-markdown-viewer',
   templateUrl: './markdown-viewer.component.html',
-  styleUrls: ['./markdown-viewer.component.css', '../default/simple-css.min.css'],
+  styleUrls: ['./markdown-viewer.component.css', '../markdown.css', '../default/simple-css.min.css'],
   encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class MarkdownViewerComponent implements OnInit {

@@ -1,6 +1,12 @@
 <h1>Available Markdown Files</h1>
-<ul>
-  <li *ngFor="let file of markdownFiles">
-    <a [routerLink]="['/markdown', file]">{{ file }}</a>
-  </li>
-</ul>
+<div class="body-markdown">
+  <ul>
+    <li *ngFor="let entryMarkdownFiles of markdownFilesMapped | keyvalue">
+      <h2>{{getynonymOrDefault(entryMarkdownFiles.key)}}</h2>
+      <div *ngFor="let markdowFile of entryMarkdownFiles.value">
+        <a [routerLink]="['/markdown', markdownService.encodePath(markdowFile.path)]">{{ markdowFile.name }}</a>
+      </div>
+    </li>
+  </ul>
+</div>
+

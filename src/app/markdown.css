@@ -1,0 +1,14 @@
+.body-markdown {
+  padding: 0 25%;
+}
+
+@media (max-width: 1200px) {
+  .body-markdown { padding: 0 20%;}
+}
+@media (max-width: 960px) {
+  .body-markdown { padding: 0 15%; }
+}
+@media (max-width: 800px) {
+  .body-markdown {padding: 0 10%; }
+}
+

@@ -6,13 +6,17 @@ import { AppComponent } from './app.component';
 import { MarkdownViewerComponent } from './markdown-viewer/markdown-viewer.component';
 import { MarkdownListComponent } from './markdown-list/markdown-list.component';
 import { DefaultNotFoundComponent } from './default/default-not-found/default-not-found.component';
+import { HeaderComponent } from './default/header/header.component';
+import { FooterComponent } from './default/footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MarkdownViewerComponent,
     MarkdownListComponent,
-    DefaultNotFoundComponent
+    DefaultNotFoundComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

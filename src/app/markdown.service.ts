@@ -41,6 +41,22 @@ export class MarkdownService {
     }
   }
 
+  /** Example encode : 'dsa/web/SSR-rendering.md' -> 'dsa_web_SSR-rendering'
+   */
+  public encodePath(input: string) : string {
+    // const decode = input.split('_').join('/') + '.md' // dsa/web/SSR-rendering.md
+    //
+    // const decodeSplit = decode.split('/')
+    // const markdownFileName = decodeSplit.pop() // SSR-rendering.md
+    // const path = decodeSplit.join('/') // dsa/web
+    //
+    // return {
+    //   path: path,
+    //   markdownFileName: markdownFileName == undefined ? '' : markdownFileName
+    // }
+    return ''
+  }
+
   async getContent(subPath : string = ''): Promise<GitHubContents | GitHubContent> {
     try {
       const response= await axios.get(environment.apiContent + subPath,

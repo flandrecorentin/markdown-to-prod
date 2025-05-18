@@ -1,6 +1,7 @@
-<div *ngIf="!error; else errorPage" [innerHTML]="markdownContent">
+<div class="body-markdown" *ngIf="!error; else errorPage" [innerHTML]="markdownContent">
 </div>
 <ng-template #errorPage>
   <h1>404 Markdown - Page Not Found</h1>
   <p>The requested markdown file does not exist.</p>
 </ng-template>
+<!-- TODO : Add recommandations similar articles -->
